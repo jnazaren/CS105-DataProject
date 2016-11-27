@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 
 def plot_data(x_vals, y_vals, t, ms, x_label="Dependent", y_label="Independent"):
     plt.plot(x_vals, y_vals, t, markersize=ms)
@@ -15,15 +16,13 @@ def compute_cost(x_val_mat, y_val_mat, theta):
     return S/(2*m)  # J (cost) value
 
 def gradient_descent(x_val_mat, y_val_mat, theta, iterations, alpha):
-    print "Performing gradient descent... "
+    print("Performing gradient descent...")
     m = y_val_mat.size
-    for i in range(0, iterations):
+    for i in tqdm(range(0, iterations), desc="Percentage Completed"):
         HY = (theta * x_val_mat) - y_val_mat
         SA = HY * x_val_mat.transpose()
         SA *= alpha/m
         theta = theta - SA
-        if i%(iterations/100) == 0:
-            print str((float(i)/float(iterations))*100)+"% finished... "
         if np.any(np.isnan(theta)):
             raise ValueError("Smaller learning rate needed!")
     return theta
@@ -42,25 +41,25 @@ def learn(degree=1, iterations=1500000, learning_rate=0.01):
     y_val_mat = np.matrix(yvals)
     plot_data(xvals, yvals, "rs", 6.0)
     cost = compute_cost(x_val_mat, y_val_mat, theta)
-    print "Initial cost: " + str(cost)
+    print("Initial cost: " + str(cost))
     theta_new = theta
     while not succeeded:
         try:
-            print "Current learning rate: " + str(learning_rate)
+            print("Current learning rate: " + str(learning_rate))
             theta_new = np.asarray(gradient_descent(x_val_mat, y_val_mat, theta, iterations, learning_rate))[0]
-            print "Theta values found: " + str(theta_new)
+            print("Theta values found: " + str(theta_new))
             succeeded = True
         except ValueError:
-            print "Learning rate too large, trying a smaller one... "
+            print("Learning rate too large, trying a smaller one...")
             learning_rate /= 10
     cost_new = compute_cost(x_val_mat, y_val_mat, theta_new)
-    print "Final cost: " + str(cost_new)
+    print("Final cost: " + str(cost_new))
     template = np.arange(min(xvals) - 10, max(xvals) + 10, 0.2)
     function = theta_new[0]
     for l in range(1, len(theta_new)):
         function += theta_new[l]*(template**l)
     plot_data(template, function, "b-", 6.0)
-    print "Plotting data... "
+    print("Plotting data...")
     plt.show()
     return theta_new
 
