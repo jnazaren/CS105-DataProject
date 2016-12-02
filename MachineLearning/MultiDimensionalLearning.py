@@ -37,9 +37,8 @@ def learn(x_degree=1, y_degree=3, iterations=150000, theta_learning_rate=0.01, b
     theta = np.matrix(theta)
     beta = "0 " * y_degree + "0"
     beta = np.matrix(beta)
-    # infile = input("Name of formatted data file: ")
-    # xvals, yvals, zvals = np.loadtxt(infile, delimiter=",", unpack=True)
-    xvals, yvals, zvals = np.loadtxt("ex1data2.txt", delimiter=",", unpack=True)
+    infile = input("Name of formatted data file: ")
+    xvals, yvals, zvals = np.loadtxt(infile, delimiter=",", unpack=True)
     x_vals = [np.ones(len(xvals))]
     y_vals = [np.ones(len(yvals))]
     for d in range(1, x_degree+1):

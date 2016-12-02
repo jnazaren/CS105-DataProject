@@ -31,9 +31,8 @@ def learn(degree=1, iterations=1500000, learning_rate=0.01):
     succeeded = False
     theta = "0 "*degree + "0"
     theta = np.matrix(theta)
-    # infile = input("Name of formatted data file: ")
-    # xvals, yvals = np.loadtxt(infile, delimiter=",", unpack=True)
-    xvals, yvals = np.loadtxt("ex1data1.txt", delimiter=",", unpack=True)
+    infile = input("Name of formatted data file: ")
+    xvals, yvals = np.loadtxt(infile, delimiter=",", unpack=True)
     x_vals = [np.ones(len(xvals))]
     for d in range(1, degree+1):
         x_vals = np.append(x_vals, [xvals**d], axis=0)
