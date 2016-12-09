@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 
-def plot_data(x_vals, y_vals, t, ms, x_label="Dependent", y_label="Independent"):
+def plot_data(x_vals, y_vals, t, ms, x_label="Magnitude", y_label="Total Damage (Millions of Dollars)"):
     plt.plot(x_vals, y_vals, t, markersize=ms)
     plt.axis([0, max(x_vals) + 10, min(y_vals) - 10, max(y_vals) + 10])
     plt.xlabel(x_label)
@@ -27,12 +27,13 @@ def gradient_descent(x_val_mat, y_val_mat, theta, iterations, alpha):
             raise ValueError("Smaller learning rate needed!")
     return theta
 
-def learn(degree=1, iterations=1500000, learning_rate=0.01):
+def learn(iterations=150000, learning_rate=0.1):
     succeeded = False
-    theta = "0 "*degree + "0"
-    theta = np.matrix(theta)
     infile = input("Name of formatted data file: ")
     xvals, yvals = np.loadtxt(infile, delimiter=",", unpack=True)
+    degree = int(input("Degree of polynomial: "))
+    theta = "0 " * degree + "0"
+    theta = np.matrix(theta)
     x_vals = [np.ones(len(xvals))]
     for d in range(1, degree+1):
         x_vals = np.append(x_vals, [xvals**d], axis=0)

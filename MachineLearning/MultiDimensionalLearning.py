@@ -31,14 +31,16 @@ def gradient_descent(x_val_mat, y_val_mat, z_val_mat, theta, beta, iterations, a
             raise ValueError("Smaller beta learning rate needed!")
     return theta, beta
 
-def learn(x_degree=1, y_degree=3, iterations=150000, theta_learning_rate=0.01, beta_learning_rate=0.01):
+def learn(iterations=150000, theta_learning_rate=0.01, beta_learning_rate=0.01):
     succeeded = False
+    infile = input("Name of formatted data file: ")
+    xvals, yvals, zvals = np.loadtxt(infile, delimiter=",", unpack=True)
+    x_degree = int(input("Degree of x polynomial: "))
+    y_degree = int(input("Degree of y polynomial: "))
     theta = "0 " * x_degree + "0"
     theta = np.matrix(theta)
     beta = "0 " * y_degree + "0"
     beta = np.matrix(beta)
-    infile = input("Name of formatted data file: ")
-    xvals, yvals, zvals = np.loadtxt(infile, delimiter=",", unpack=True)
     x_vals = [np.ones(len(xvals))]
     y_vals = [np.ones(len(yvals))]
     for d in range(1, x_degree+1):
